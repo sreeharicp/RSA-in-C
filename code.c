@@ -26,7 +26,7 @@ int main()
 
 void primeval()
 {
-  printf("\nENTER FIRST PRIME NUMBER\n");
+  printf("\nENTER FIRST PRIME NUMBER\n"); //prime check
   scanf("%d", &a);
   flag = prime(a);
   if(flag == 0)
