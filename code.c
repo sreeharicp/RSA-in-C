@@ -109,6 +109,7 @@ void encrypt()
     pt = m[i];
     pt = pt - 96;
     k = 1;
+    #pragma omp parallel for
     for(j = 0; j < key; j++)
     {
      k = k * pt;
