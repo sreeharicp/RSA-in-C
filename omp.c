@@ -1,6 +1,4 @@
 #include<stdio.h>
-#include<math.h>
-#include<stdlib.h>
 #include<string.h>
 #define maxlen 10000
 long prime(long);
@@ -45,12 +43,7 @@ int main(void)
    
    
    publickey(p,q,&pube,&pubmod);
-   printf("public key: %d, %d \n",pube,pubmod);
    privatekey(p,q,pube,&prive,&privmod);
-   printf("private key: %d, %d \n", prive,privmod);
-
-
-   printf("Original text: %s \n", inmsg);
    
    char2long(inmsg, inmsg_l);
    
@@ -58,7 +51,7 @@ int main(void)
    encrypt(inmsg_l, pube, pubmod, outmsg_l, len);
    long2char(outmsg_l, outmsg);
    k=strlen(outmsg);
-   printf("Encrypted text is : ");	
+   printf("Encrypted text : ");	
    for(i=0;i<k;i++)
    {
    	printf("%ld ",outmsg[i]);
@@ -90,9 +83,16 @@ long prime(long a)
 
 int publickey(long p, long q, long *exp, long *mod)
 {
-
+   long sqt,temp;
    *mod = (p-1)*(q-1);
-   *exp = (int)sqrt(*mod);
+   sqt=(*mod)/2;
+   temp=0;
+   while(sqt!=temp)
+   {
+        temp=sqt;
+	sqt=((*mod)/temp+temp)/2;
+   }
+   *exp = (int)sqt;
    while (1!=gcd(*exp,*mod))  
    {
       (*exp)++;
@@ -168,7 +168,8 @@ long gcd(long p, long q)
 
 int long2char(long* in, char* out)
 {
-   while(*in != 0) *out++ = (char)(*in++);
+   while(*in != 0) 
+   *out++ = (char)(*in++);
    *out = '\0';
    return 0;
 }
@@ -176,7 +177,8 @@ int long2char(long* in, char* out)
 
 int char2long(char* in, long * out)
 {
-   while(*in != '\0') *out++ = (long )(*in++);
+   while(*in != '\0') 
+   *out++ = (long )(*in++);
    *out = 0;
    return 0;
 }
